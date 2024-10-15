@@ -833,12 +833,14 @@ static int vcp_pm_event(struct notifier_block *notifier
 
 	switch (pm_event) {
 	case PM_SUSPEND_PREPARE:
+                pr_notice("[VCP] PM_SUSPEND_PREPARE 0 entered %d %d\n", pwclkcnt, is_suspending);
 		mutex_lock(&vcp_A_notify_mutex);
 		vcp_extern_notify(VCP_EVENT_SUSPEND);
 		mutex_unlock(&vcp_A_notify_mutex);
+                pr_notice("[VCP] PM_SUSPEND_PREPARE 1 entered %d %d\n", pwclkcnt, is_suspending);
 
 		mutex_lock(&vcp_pw_clk_mutex);
-		pr_notice("[VCP] PM_SUSPEND_PREPARE entered %d %d\n", pwclkcnt, is_suspending);
+		pr_notice("[VCP] PM_SUSPEND_PREPARE 2 entered %d %d\n", pwclkcnt, is_suspending);
 		if ((!is_suspending) && pwclkcnt) {
 			is_suspending = true;
 #if VCP_RECOVERY_SUPPORT
